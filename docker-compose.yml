@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: paragraf
+    restart: unless-stopped
+    command: gunicorn --bind :2013 -w 4 'index:app' --timeout 1000
+
+    volumes:
+      - .:/code
+    ports:
+      - "2013:2013"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1

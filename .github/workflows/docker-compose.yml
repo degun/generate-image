@@ -1,0 +1,27 @@
+name: Remote Docker Compose Deployment
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setting up SSH keys
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: SSH and Deploy
+      run: |
+        ssh -o StrictHostKeyChecking=no root@49.12.15.46 << 'ENDSSH'
+        cd /var/www/paragraf
+        git pull
+        docker-compose build
+        docker-compose -p paragraf up -d --build
+        ENDSSH
