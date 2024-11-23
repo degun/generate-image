@@ -12,7 +12,7 @@ def generate_image():
     try:
         text = request.form.get('text', 'Paragraf')
         bg_color = request.form.get('bg_color', get_random_contrasting_color())
-        font_color = request.form.get('font_color', 'black')
+        font_color = request.form.get('font_color', 'white')
         width = int(request.form.get('width', 800))
         height = int(request.form.get('height', 600))
         font_size = int(request.form.get('font_size', 520))
